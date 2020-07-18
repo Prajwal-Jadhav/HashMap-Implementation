@@ -30,6 +30,10 @@ public class HashMap<K, V> {
   public void put(K key, V value) {
     int indexOfKey = createIndex(key);
 
+    if (this.values[indexOfKey] == null) {
+      this.values[indexOfKey] = new ArrayList<>();
+    }
+
     ArrayList<Pair<K, V>> listAtIndex = this.values[indexOfKey];
 
     int index = getIndexOfKey(key, listAtIndex);
@@ -46,7 +50,7 @@ public class HashMap<K, V> {
     }
   }
 
-  private V remove(K key) {
+  public V remove(K key) {
     int indexOfList = createIndex(key);
 
     if (this.values[indexOfList] == null || this.values[indexOfList].size() == 0) {

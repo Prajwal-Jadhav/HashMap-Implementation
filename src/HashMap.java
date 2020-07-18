@@ -54,4 +54,28 @@ public class HashMap<K, V> {
     }
     return -1;
   }
+
+  private void grow() {
+    ArrayList<Pair<K, V>>[] newArray = (ArrayList<Pair<K, V>>[]) new ArrayList[this.values.length * 2];
+
+    for (int i = 0; i < this.values.length; i++) {
+      copyToNewArray(newArray, i);
+    }
+
+    this.values = newArray;
+  }
+
+  private void copyToNewArray(ArrayList<Pair<K, V>>[] newArray, int atIndex) {
+    for (int i = 0; i < this.values[atIndex].size(); i++) {
+      Pair<K, V> pair = this.values[atIndex].get(i);
+
+      int hashCode = Math.abs(pair.getKey().hashCode() % newArray.length);
+
+      if (newArray[hashCode] == null) {
+        newArray[hashCode] = new ArrayList<>();
+      }
+
+      newArray[hashCode].add(pair);
+    }
+  }
 }

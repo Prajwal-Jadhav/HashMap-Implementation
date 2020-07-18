@@ -27,7 +27,7 @@ public class HashMap<K, V> {
     return null;
   }
 
-  public void add(K key, V value) {
+  public void put(K key, V value) {
     int indexOfKey = createIndex(key);
 
     ArrayList<Pair<K, V>> listAtIndex = this.values[indexOfKey];

@@ -46,6 +46,26 @@ public class HashMap<K, V> {
     }
   }
 
+  private V remove(K key) {
+    int indexOfList = createIndex(key);
+
+    if (this.values[indexOfList] == null || this.values[indexOfList].size() == 0) {
+      return null;
+    }
+
+    ArrayList<Pair<K, V>> listAtIndex = this.values[indexOfList];
+
+    int indexOfKey = getIndexOfKey(key, listAtIndex);
+
+    if (indexOfKey < 0) {
+      return null;
+    }
+
+    Pair<K, V> pair = listAtIndex.get(indexOfKey);
+    listAtIndex.remove(indexOfKey);
+    return pair.getValue();
+  }
+
   private int createIndex(K key) {
     return Math.abs(key.hashCode() % this.values.length);
   }

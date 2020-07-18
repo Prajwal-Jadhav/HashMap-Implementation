@@ -40,6 +40,10 @@ public class HashMap<K, V> {
     } else {
       listAtIndex.get(index).setValue(value);
     }
+
+    if (1.0 * this.totalNumberOfPairs / this.values.length >= 0.75) {
+      grow();
+    }
   }
 
   private int createIndex(K key) {

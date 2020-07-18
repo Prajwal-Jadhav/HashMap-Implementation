@@ -14,10 +14,10 @@ public class HashMap<K, V> {
     if (this.values[indexOfKey] == null)
       return null;
 
-    ArrayList<Pair<K, V>> arrayAtIndex = this.values[indexOfKey];
+    ArrayList<Pair<K, V>> listAtIndex = this.values[indexOfKey];
 
-    for (int i = 0; i < arrayAtIndex.size(); i++) {
-      Pair<K, V> pair = arrayAtIndex.get(i);
+    for (int i = 0; i < listAtIndex.size(); i++) {
+      Pair<K, V> pair = listAtIndex.get(i);
 
       if (key.equals(pair.getKey())) {
         return pair.getValue();
@@ -27,7 +27,31 @@ public class HashMap<K, V> {
     return null;
   }
 
+  public void add(K key, V value) {
+    int indexOfKey = createIndex(key);
+
+    ArrayList<Pair<K, V>> listAtIndex = this.values[indexOfKey];
+
+    int index = getIndexOfKey(key, listAtIndex);
+
+    if (index < 0) {
+      listAtIndex.add(new Pair<K, V>(key, value));
+      this.totalNumberOfPairs++;
+    } else {
+      listAtIndex.get(index).setValue(value);
+    }
+  }
+
   private int createIndex(K key) {
     return Math.abs(key.hashCode() % this.values.length);
+  }
+
+  private int getIndexOfKey(K key, ArrayList<Pair<K, V>> list) {
+    for (int i = 0; i < list.size(); i++) {
+      if (key.equals(list.get(i).getKey())) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
